@@ -1,7 +1,3 @@
-﻿  Camera.cpp
-D:\Maybe future game\-__-\SimpleEngine\SimpleEngine\Camera.cpp(5,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-D:\Maybe future game\-__-\SimpleEngine\SimpleEngine\Camera.cpp(5,49): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-  Ray.cpp
-  SimpleEngine.cpp
-  Generating Code...
+﻿  SimpleEngine.cpp
+D:\Maybe future game\-__-\SimpleEngine\SimpleEngine\SimpleEngine.cpp(19,36): warning C4305: 'argument': truncation from 'double' to 'float'
   SimpleEngine.vcxproj -> D:\Maybe future game\-__-\SimpleEngine\Debug\SimpleEngine.exe
