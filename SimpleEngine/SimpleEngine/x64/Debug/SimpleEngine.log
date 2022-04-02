@@ -1,3 +1,0 @@
-﻿  SimpleEngine.cpp
-D:\Maybe future game\-__-\SimpleEngine\SimpleEngine\SimpleEngine.cpp(16,40): warning C4305: 'argument': truncation from 'double' to 'float'
-  SimpleEngine.vcxproj -> D:\Maybe future game\-__-\SimpleEngine\x64\Debug\SimpleEngine.exe

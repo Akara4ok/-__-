@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{3539c66c-2a45-413f-9383-e918a45bd675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{5c5b7c08-6a40-41af-ab55-dc74b31200dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\BMP Classes">
+      <UniqueIdentifier>{f3c055a3-178a-48bd-85c1-c6da28c4bd7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\BMP Classes">
+      <UniqueIdentifier>{0c05e4a5-ba36-48df-b308-83c34a7a379e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimpleEngine.cpp">
@@ -31,7 +43,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BMPWriter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\IO\BMP Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +59,11 @@
     <ClInclude Include="Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BMPWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BMPStruct.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\IO\BMP Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="BMPWriter.h">
+      <Filter>Header Files\IO\BMP Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
