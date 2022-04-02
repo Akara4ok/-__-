@@ -25,41 +25,50 @@
     <Filter Include="Source Files\IO\BMP Classes">
       <UniqueIdentifier>{0c05e4a5-ba36-48df-b308-83c34a7a379e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO\Obj Classes">
+      <UniqueIdentifier>{ac875cb9-1c5c-43f9-b248-e46c94829fff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\obj Classes">
+      <UniqueIdentifier>{080800de-e534-42cf-8bdc-268256b02236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Primitives">
+      <UniqueIdentifier>{6e02dcd0-996c-4c69-acf4-4d5bce851010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Primitives">
+      <UniqueIdentifier>{4ed4629c-48ec-4ea3-a6d0-c615c0b26b16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimpleEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BMPWriter.cpp">
       <Filter>Source Files\IO\BMP Classes</Filter>
     </ClCompile>
     <ClCompile Include="objParser.cpp">
+      <Filter>Source Files\IO\obj Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BMPStruct.h">
@@ -69,6 +78,21 @@
       <Filter>Header Files\IO\BMP Classes</Filter>
     </ClInclude>
     <ClInclude Include="objParser.h">
+      <Filter>Header Files\IO\Obj Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

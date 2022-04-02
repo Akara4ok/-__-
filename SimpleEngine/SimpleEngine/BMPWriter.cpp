@@ -20,7 +20,7 @@ void  BMPWriter::writePicture(std::vector<std::vector<bool>> photo, std::string 
     head.width = width;
     head.height = height;
     head.biplanes = 1;
-    head.bitsPixel = 24;
+    head.bitsPixel = 32;
     head.biCompression = 0;
     head.biSizeImage = size - 54;
     head.biXPelsPerMeter = 2834;
