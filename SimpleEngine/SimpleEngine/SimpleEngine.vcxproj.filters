@@ -45,6 +45,9 @@
     <ClCompile Include="BMPWriter.cpp">
       <Filter>Source Files\IO\BMP Classes</Filter>
     </ClCompile>
+    <ClCompile Include="objParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="BMPWriter.h">
       <Filter>Header Files\IO\BMP Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="objParser.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

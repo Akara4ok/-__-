@@ -6,7 +6,7 @@ void  BMPWriter::writePicture(std::vector<std::vector<bool>> photo, std::string 
     std::ofstream fout;
     fout.open(file_name, std::ios::binary);
 
-
+    BMP_head head;
     int width = photo[0].size();
     int height = photo.size();
     int size = width * height + 54;
@@ -34,6 +34,7 @@ void  BMPWriter::writePicture(std::vector<std::vector<bool>> photo, std::string 
         number_insignificant = 0;
 
     uint8_t insignificant = 0;
+    Pixel_triplet** pixels;
     pixels = new Pixel_triplet * [height];
     for (int i = 0; i < height; i++)
     {

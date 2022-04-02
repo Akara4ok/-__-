@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="BMPWriter.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="objParser.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="SimpleEngine.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="BMPWriter.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="BMPStruct.h" />
+    <ClInclude Include="objParser.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector3.h" />

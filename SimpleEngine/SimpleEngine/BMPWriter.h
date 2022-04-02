@@ -5,8 +5,6 @@
 
 class BMPWriter
 {
-	BMP_head head;
-	Pixel_triplet** pixels;
 public:
-	void writePicture(std::vector<std::vector<bool>> photo,std::string path);
+	static void writePicture(std::vector<std::vector<bool>> photo,std::string path);
 };
