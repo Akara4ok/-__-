@@ -18,7 +18,7 @@ Vector3 Ray::getDir()
 	return dir;
 }
 
-float Ray::triangleIntersaction(Triangle tr)
+float Ray::triangleIntersaction(Triangle tr, float& u, float& v)
 {
 	Vector3 v0 = tr.getVertex(0);
 	Vector3 v1 = tr.getVertex(1);
@@ -37,13 +37,13 @@ float Ray::triangleIntersaction(Triangle tr)
 
 	float inv_det = 1 / det;
 	Vector3 tvec = origin - v0;
-	float u = Vector3::dot(tvec, pvec) * inv_det;
+	u = Vector3::dot(tvec, pvec) * inv_det;
 	if (u < 0 || u > 1) {
 		return 0;
 	}
 
 	Vector3 qvec = Vector3::cross(tvec, e1);
-	float v = Vector3::dot(dir, qvec) * inv_det;
+	v = Vector3::dot(dir, qvec) * inv_det;
 	if (v < 0 || u + v > 1) {
 		return 0;
 	}

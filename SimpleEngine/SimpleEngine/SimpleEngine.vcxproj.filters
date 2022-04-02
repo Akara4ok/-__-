@@ -66,6 +66,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TriangleUV.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleUV.h">
+      <Filter>Header Files\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

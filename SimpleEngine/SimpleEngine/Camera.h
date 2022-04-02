@@ -15,6 +15,6 @@ class Camera
 public:
 	Camera(float distToScreen = 1, float realH = 9, float realW = 16, float pixelH = 1080, float pixelW = 1920);
 	void setScreen(Ray playerView);
-	std::vector<std::vector<bool>> draw(std::vector<Triangle> triangles);
+	std::vector<std::vector<std::pair<int, Vector3>>> draw(std::vector<Triangle> triangles);
 };
 
