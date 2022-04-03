@@ -1,11 +1,17 @@
 #include "objParser.h"
 #include "Vector3.h"
 #include <fstream>
+#include <map>
+#include "BMPWriter.h"
 
-void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<Vector3>& vertex, std::vector<TriangleUV>& trianglesTexture, std::string path)
+void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::string>& trianglesTextureName, std::vector<TriangleUV>& trianglesTexture, std::map<std::string, std::vector<std::vector<Pixel_triplet>>>& textures, std::string path, std::string file_name)
 {
+    std::vector<Vector3> vertex;
     std::vector<Vector2> textureCoord;
-    std::ifstream fin(path);
+    std::ifstream fin(path + "\\" + file_name);
+    std::ifstream finMtl;
+    std::string lastTexture;
+
     while (!fin.eof())
     {
         std::string s;
@@ -67,17 +73,56 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<Vector3>&
                 next = s.find("/", tprev);
                 if (next == s.npos)
                     next = s.find(" ", tprev);
-                ntVertex.push_back(std::stoi(s.substr(tprev, next - prev)) - 1);
+                ntVertex.push_back(std::stoi(s.substr(tprev, next - tprev)) - 1);
 
                 if (i >= 2)
                 {
                     triangles.push_back(Triangle(vertex[nVertex[0]], vertex[nVertex[i - 1]], vertex[nVertex[i]]));
                     trianglesTexture.push_back(TriangleUV(textureCoord[ntVertex[0]], textureCoord[ntVertex[i - 1]], textureCoord[ntVertex[i]]));
+                    trianglesTextureName.push_back(lastTexture);
                 }
                 i++;
                 next = s.find(" ", prev);
                 prev = next + 1;
             }
+        }
+        if (s.find("mtllib") != s.npos)
+        {
+            prev = s.find(" ") + 1;
+            next = s.find(" ", prev);
+            std::string mtlName = s.substr(prev, next - prev);
+            finMtl.open(path + "\\" + mtlName);
+            std::string lastNewMtl;
+            std::string lastPath;
+            while (!finMtl.eof())
+            {
+                std::string s;
+                std::getline(finMtl, s);
+                if (s.find("newmtl ") != s.npos)
+                {
+                    prev = s.find(" ") + 1;
+                    next = s.find(" ", prev);
+                    lastNewMtl = s.substr(prev, next - prev);
+                }
+                if (s.find("map_Kd ") != s.npos)
+                {
+                    int pos = s.find("map_Kd ");
+                    prev = s.find(" ", pos) + 1;
+                    next = s.find(" ", prev);
+                    lastPath = s.substr(prev, next - prev);
+                    if (!((lastPath[0] == 'D' || lastPath[0] == 'D') && lastPath[1] == ':'))
+                        lastPath = path + "\\" + lastPath;
+                    std::vector<std::vector<Pixel_triplet>> photo = BMPWriter::readPicture(lastPath);
+                    textures[lastNewMtl] = photo;
+                }
+            }
+            finMtl.close();
+        }
+        if (s.find("usemtl") != s.npos)
+        {
+            prev = s.find(" ") + 1;
+            next = s.find(" ", prev);
+            lastTexture = s.substr(prev, next - prev);
         }
     }
 }

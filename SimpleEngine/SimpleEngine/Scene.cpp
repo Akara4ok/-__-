@@ -5,11 +5,9 @@ Scene::Scene(Camera camera) : camera(camera)
 {
 }
 
-void Scene::addObj(std::string objPath, std::string texturePath)
+void Scene::addObj(std::string objPath, std::string file_name)
 {
-	objParser::parseObj(triangles, vertex, trianglesTexture,  objPath);
-	if (texturePath != "")
-		texture = BMPWriter::readPicture(texturePath);
+	objParser::parseObj(triangles, trianglesTextureName,trianglesTexture, texture, objPath, file_name);
 }
 
 std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
@@ -31,7 +29,7 @@ std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 				P.y = P.y - floor(P.y);
 
 
-				res[i][j] = texture[floor(P.y * (texture.size() - 1))][floor(P.x * (texture[0].size() - 1))];
+				res[i][j] = texture[trianglesTextureName[vectorsUV[i][j].first]][floor(P.y * (texture[trianglesTextureName[vectorsUV[i][j].first]].size() - 1))][floor(P.x * (texture[trianglesTextureName[vectorsUV[i][j].first]][0].size() - 1))];
 			}
 		}
 	}
