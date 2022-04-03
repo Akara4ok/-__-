@@ -6,7 +6,12 @@ std::vector<std::vector<Pixel_triplet>> BMPWriter::readPicture(std::string path)
     BMP_head head;
     std::ifstream fin;
     fin.open(path, std::ios::binary);
+    if (!fin.is_open())
+        throw std::runtime_error("Error! Unable to open the image.\n");
+
     fin.read((char*)&head, sizeof(BMP_head));
+    if (head.bitsPixel != 24)
+        throw std::runtime_error("Error! Unrecognized bmp format.\n");
 
     std::vector<std::vector<Pixel_triplet>> pixels(head.height, std::vector<Pixel_triplet>(head.width));
 
@@ -52,7 +57,7 @@ void BMPWriter::writePicture(std::vector<std::vector<Pixel_triplet>>photo, std::
     head.width = width;
     head.height = height;
     head.biplanes = 1;
-    head.bitsPixel = 32;
+    head.bitsPixel = 24;
     head.biCompression = 0;
     head.biSizeImage = size - 54;
     head.biXPelsPerMeter = 2834;
@@ -101,7 +106,7 @@ void  BMPWriter::writePicture(std::vector<std::vector<bool>> photo, std::string 
     head.width = width;
     head.height = height;
     head.biplanes = 1;
-    head.bitsPixel = 32;
+    head.bitsPixel = 24;
     head.biCompression = 0;
     head.biSizeImage = size - 54;
     head.biXPelsPerMeter = 2834;

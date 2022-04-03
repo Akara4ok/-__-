@@ -26,7 +26,7 @@ void Camera::setScreen(Ray playerView) {
 	t = -(a * camera.x + b * camera.y + c * camera.z + d) / (a * dir.x + b * dir.y + c * dir.z);
 	Vector3 center(camera.x + dir.x * t, camera.y + dir.y * t, camera.z + dir.z * t);
 
-	Vector3 right = (Vector3::cross(dir, Vector3(0, 0, 1))).getOrt(); //two ortogonal vector for screen
+	Vector3 right = (Vector3::cross(dir, Vector3(0, 1, 0))).getOrt(); //two ortogonal vector for screen
 	Vector3 up = (Vector3::cross(right, dir)).getOrt();
 
 	Vector3 corner = right * (-realW / 2) + center; //find left-down corner

@@ -28,7 +28,7 @@ struct Pixel_triplet
 	uint8_t blueComponent;
 	uint8_t greenComponent;
 	uint8_t redComponent;
-	uint8_t alpa_mask;
+	//uint8_t alpa_mask;
 	Pixel_triplet() {}
 	Pixel_triplet(uint8_t r, uint8_t g, uint8_t b) : redComponent(r), greenComponent(g), blueComponent(b) {}
 };

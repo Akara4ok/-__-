@@ -12,6 +12,9 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
     std::ifstream finMtl;
     std::string lastTexture;
 
+    if (!fin.is_open())
+        throw std::runtime_error("Error! Unable to open the obj file.\n");
+
     while (!fin.eof())
     {
         std::string s;
@@ -56,6 +59,7 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
         {
             prev = 2;
             next = prev;
+            bool isTextures = true;
             int i = 0;
             std::vector<int> nVertex;
             std::vector<int> ntVertex;
@@ -71,14 +75,23 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
                 
                 int tprev = next + 1;
                 next = s.find("/", tprev);
-                if (next == s.npos)
-                    next = s.find(" ", tprev);
-                ntVertex.push_back(std::stoi(s.substr(tprev, next - tprev)) - 1);
+                if (next == s.npos || next == tprev)
+                {
+                    next = s.find(" ", prev);
+                    isTextures = false;
+                }
+                else
+                {
+                    ntVertex.push_back(std::stoi(s.substr(tprev, next - tprev)) - 1);
+                }
 
                 if (i >= 2)
                 {
                     triangles.push_back(Triangle(vertex[nVertex[0]], vertex[nVertex[i - 1]], vertex[nVertex[i]]));
-                    trianglesTexture.push_back(TriangleUV(textureCoord[ntVertex[0]], textureCoord[ntVertex[i - 1]], textureCoord[ntVertex[i]]));
+                    if (isTextures)
+                        trianglesTexture.push_back(TriangleUV(textureCoord[ntVertex[0]], textureCoord[ntVertex[i - 1]], textureCoord[ntVertex[i]]));
+                    else
+                        trianglesTexture.push_back(TriangleUV(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)));
                     trianglesTextureName.push_back(lastTexture);
                 }
                 i++;
@@ -92,6 +105,8 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
             next = s.find(" ", prev);
             std::string mtlName = s.substr(prev, next - prev);
             finMtl.open(path + "\\" + mtlName);
+            if (!finMtl.is_open())
+                throw std::runtime_error("Error! Unable to open the mtl file.\n");
             std::string lastNewMtl;
             std::string lastPath;
             while (!finMtl.eof())
@@ -107,13 +122,25 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
                 if (s.find("map_Kd ") != s.npos)
                 {
                     int pos = s.find("map_Kd ");
-                    prev = s.find(" ", pos) + 1;
+                    prev = pos + 7;
+                    while (s[prev] == ' ')
+                    {
+                        prev++;
+                    }
                     next = s.find(" ", prev);
                     lastPath = s.substr(prev, next - prev);
                     if (!((lastPath[0] == 'D' || lastPath[0] == 'D') && lastPath[1] == ':'))
                         lastPath = path + "\\" + lastPath;
-                    std::vector<std::vector<Pixel_triplet>> photo = BMPWriter::readPicture(lastPath);
-                    textures[lastNewMtl] = photo;
+                    try
+                    {
+                        std::vector<std::vector<Pixel_triplet>> photo = BMPWriter::readPicture(lastPath);
+                        textures[lastNewMtl] = photo;
+                    }
+                    catch (std::runtime_error e)
+                    {
+                        std::cout << e.what();
+                        textures[lastNewMtl] = std::vector<std::vector<Pixel_triplet>>();
+                    }
                 }
             }
             finMtl.close();

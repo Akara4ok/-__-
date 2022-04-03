@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "BMPWriter.h"
+#include <exception>
 
 Scene::Scene(Camera camera) : camera(camera)
 {
@@ -7,12 +8,21 @@ Scene::Scene(Camera camera) : camera(camera)
 
 void Scene::addObj(std::string objPath, std::string file_name)
 {
-	objParser::parseObj(triangles, trianglesTextureName,trianglesTexture, texture, objPath, file_name);
+	try
+	{
+		objParser::parseObj(triangles, trianglesTextureName, trianglesTexture, texture, objPath, file_name);
+	}
+	catch (std::runtime_error& e)
+	{
+		std::cout << e.what();
+	}
 }
 
 std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 {
 	std::vector<std::vector<std::pair<int, Vector3>>> vectorsUV = camera.draw(triangles);
+	int end = clock();
+	std::cout << "Got frame - " << end << "ms\n";
 	std::vector<std::vector<Pixel_triplet>> res(vectorsUV.size(), std::vector<Pixel_triplet>(vectorsUV[0].size(), Pixel_triplet(0, 0, 0)));
 	for (size_t i = 0; i < vectorsUV.size(); i++)
 	{
@@ -28,8 +38,10 @@ std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 				P.x = P.x - floor(P.x);
 				P.y = P.y - floor(P.y);
 
-
-				res[i][j] = texture[trianglesTextureName[vectorsUV[i][j].first]][floor(P.y * (texture[trianglesTextureName[vectorsUV[i][j].first]].size() - 1))][floor(P.x * (texture[trianglesTextureName[vectorsUV[i][j].first]][0].size() - 1))];
+				if (!texture[trianglesTextureName[vectorsUV[i][j].first]].empty())
+					res[i][j] = texture[trianglesTextureName[vectorsUV[i][j].first]][floor(P.y * (texture[trianglesTextureName[vectorsUV[i][j].first]].size() - 1))][floor(P.x * (texture[trianglesTextureName[vectorsUV[i][j].first]][0].size() - 1))];
+				else
+					res[i][j] = Pixel_triplet(255, 255, 255);
 			}
 		}
 	}
