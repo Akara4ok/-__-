@@ -47,7 +47,7 @@ Vector2 Vector2::operator-(const Vector2 vec1)
 	return Vector2(x - vec1.x, y - vec1.y);
 }
 
-Vector2 Vector2::operator*(const double a)
+Vector2 Vector2::operator*(const float a)
 {
 	return Vector2(a * x, a * y);
 }

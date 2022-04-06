@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BMPStruct.cpp" />
     <ClCompile Include="BMPWriter.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="objParser.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="BMPWriter.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="BMPStruct.h" />
+    <ClInclude Include="LightSource.h" />
     <ClInclude Include="objParser.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />

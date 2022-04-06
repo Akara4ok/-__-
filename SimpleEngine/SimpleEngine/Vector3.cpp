@@ -33,6 +33,11 @@ float Vector3::dot(Vector3 vec1, Vector3 vec2)
 	return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 }
 
+float Vector3::getCos(Vector3 vec1, Vector3 vec2)
+{
+	return Vector3::dot(vec1, vec2) / (vec1.absValue() * vec2.absValue());
+}
+
 Vector3 Vector3::cross(Vector3 vec1, Vector3 vec2)
 {
 	return Vector3(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z, vec1.x * vec2.y - vec1.y * vec2.x);
@@ -53,7 +58,7 @@ Vector3 Vector3::operator-(const Vector3 vec1)
 	return Vector3(x - vec1.x, y - vec1.y, z - vec1.z);
 }
 
-Vector3 Vector3::operator*(const double a)
+Vector3 Vector3::operator*(const float a)
 {
 	return Vector3(a * x, a * y, a * z);
 }

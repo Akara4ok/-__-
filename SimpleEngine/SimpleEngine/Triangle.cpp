@@ -17,3 +17,8 @@ Vector3 Triangle::getVertex(int number)
 	else if (number == 2)
 		return v2;
 }
+
+Vector3 Triangle::getNormal()
+{
+	return Vector3::cross(Vector3(v0, v1), Vector3(v0, v2));
+}

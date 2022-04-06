@@ -106,7 +106,7 @@ void objParser::parseObj(std::vector<Triangle>& triangles, std::vector<std::stri
             std::string mtlName = s.substr(prev, next - prev);
             finMtl.open(path + "\\" + mtlName);
             if (!finMtl.is_open())
-                throw std::runtime_error("Error! Unable to open the mtl file.\n");
+                continue;
             std::string lastNewMtl;
             std::string lastPath;
             while (!finMtl.eof())

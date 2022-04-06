@@ -3,6 +3,11 @@
 #include "Vector2.h"
 #include <utility>
 
+Vector3 Camera::getOrig()
+{
+	return camera;
+}
+
 Camera::Camera(float distToScreen, float realH, float realW, float pixelH, float pixelW) : distToScreen(distToScreen), realH(realH), realW(realW), pixelH(pixelH), pixelW(pixelW)
 {
 	screenDots = std::vector<std::vector<Vector3>>(pixelH, std::vector<Vector3>(pixelW));
@@ -42,9 +47,9 @@ void Camera::setScreen(Ray playerView) {
 	}
 }
 
-std::vector<std::vector<std::pair<int, Vector3>>> Camera::draw(std::vector<Triangle> triangles)
+std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::draw(std::vector<Triangle> triangles)
 {
-	std::vector < std::vector<std::pair<int, Vector3>>> res(pixelH, std::vector < std::pair<int, Vector3>>(pixelW, std::make_pair(-1, Vector3(0, 0, 0))));
+	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> res(pixelH, std::vector < std::pair<std::pair<int, Vector3>, Vector3>>(pixelW, std::make_pair(std::make_pair(-1, Vector3(0, 0, 0)), Vector3(0, 0, 0))));
 
 	for (size_t i = 0; i < pixelH; i++)
 	{
@@ -54,10 +59,10 @@ std::vector<std::vector<std::pair<int, Vector3>>> Camera::draw(std::vector<Trian
 			for (size_t k = 0; k < triangles.size(); k++)
 			{
 				float u, v;
-				float dist = Ray(camera, screenDots[i][j] - camera).triangleIntersaction(triangles[k], u, v);
+				float dist = Ray(camera, (screenDots[i][j] - camera)).triangleIntersaction(triangles[k], u, v);
 				if (dist && min > dist)
 				{
-					res[i][j] = std::make_pair(k, Vector3(1 - u - v, u, v));
+					res[i][j] = std::make_pair(std::make_pair(k, camera + (screenDots[i][j] - camera).getOrt() * dist), Vector3(1 - u - v, u, v));
 					min = dist;
 				}
 			}

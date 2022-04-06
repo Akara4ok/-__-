@@ -8,6 +8,7 @@
 #include "objParser.h"
 #include "Camera.h"
 #include "BMPStruct.h"
+#include "LightSource.h"
 
 class Scene
 {
@@ -16,9 +17,10 @@ class Scene
     std::vector<std::string> trianglesTextureName;
     std::vector<TriangleUV> trianglesTexture;
     std::map<std::string, std::vector<std::vector<Pixel_triplet>>> texture;
+    LightSource lightSource;
     Camera camera;
 public:
-    Scene(Camera camera);
+    Scene(Camera camera, LightSource light);
     void addObj(std::string objPath, std::string file_name);
     std::vector<std::vector<Pixel_triplet>> getFrame();
     Vector3 getCenter();

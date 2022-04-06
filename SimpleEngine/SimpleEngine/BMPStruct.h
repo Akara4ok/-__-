@@ -31,5 +31,9 @@ struct Pixel_triplet
 	//uint8_t alpa_mask;
 	Pixel_triplet() {}
 	Pixel_triplet(uint8_t r, uint8_t g, uint8_t b) : redComponent(r), greenComponent(g), blueComponent(b) {}
+	Pixel_triplet operator*(const float a)
+	{
+		return Pixel_triplet(redComponent * a, greenComponent * a, blueComponent * a);
+	}
 };
 #pragma pack(pop)
