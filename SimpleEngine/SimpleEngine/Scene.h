@@ -17,10 +17,10 @@ class Scene
     std::vector<std::string> trianglesTextureName;
     std::vector<TriangleUV> trianglesTexture;
     std::map<std::string, std::vector<std::vector<Pixel_triplet>>> texture;
-    LightSource lightSource;
+    std::vector<LightSource> lightSources;
     Camera camera;
 public:
-    Scene(Camera camera, LightSource light);
+    Scene(Camera camera, std::vector<LightSource> light);
     void addObj(std::string objPath, std::string file_name);
     std::vector<std::vector<Pixel_triplet>> getFrame();
     Vector3 getCenter();
