@@ -8,14 +8,14 @@ int main() {
 	int start = clock();
 	int end;
 
-	Camera camera(0.08, 0.09, 0.16, 1080, 1920);
-	Ray player(Vector3(300, 300, 300), Vector3(-300, -300, -300));
-	LightSource light(Vector3(500, 300, 300), Pixel_triplet(255, 255, 255));
+	Camera camera(1, 0.16, 0.09, 192, 108);
+	Ray player(Vector3(-1, -10, 0), Vector3(1, 10, 0));
+	LightSource light(Vector3(-1, -1, -1), Pixel_triplet(255, 255, 255));
 	camera.setScreen(player);
 	Scene scene(camera, light);
 	end = clock();
 	std::cout << "Scene created - " << end - start << "ms\n";
-	scene.addObj("D:\\test", "newscene.obj");
+	scene.addObj("D:\\test", "cow.obj");
 	end = clock();
 	std::cout << "Object parsed - " << end - start << "ms\n";
 	auto res = scene.getFrame();

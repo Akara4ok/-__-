@@ -21,7 +21,10 @@ void Scene::addObj(std::string objPath, std::string file_name)
 std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 {
 	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> vectorsUV = camera.draw(triangles);
+	std::vector<std::vector<Vector3>> layers(vectorsUV.size(), std::vector<Vector3>(vectorsUV[0].size(), Vector3(0, 0, 0)));
 	std::vector<std::vector<Pixel_triplet>> res(vectorsUV.size(), std::vector<Pixel_triplet>(vectorsUV[0].size(), Pixel_triplet(0, 0, 0)));
+
+	Vector3 lightVector = Vector3(lightSource.color.redComponent / 255, lightSource.color.greenComponent / 255, lightSource.color.blueComponent / 255);
 	for (size_t i = 0; i < vectorsUV.size(); i++)
 	{
 		for (size_t j = 0; j < vectorsUV[0].size(); j++)
@@ -46,15 +49,31 @@ std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 
 				if (!texture[trianglesTextureName[vectorsUV[i][j].first.first]].empty())
 				{
-					res[i][j] = texture[trianglesTextureName[vectorsUV[i][j].first.first]][floor(P.y * (texture[trianglesTextureName[vectorsUV[i][j].first.first]].size() - 1))][floor(P.x * (texture[trianglesTextureName[vectorsUV[i][j].first.first]][0].size() - 1))] * cos;
+					Pixel_triplet textureColor = texture[trianglesTextureName[vectorsUV[i][j].first.first]][floor(P.y * (texture[trianglesTextureName[vectorsUV[i][j].first.first]].size() - 1))][floor(P.x * (texture[trianglesTextureName[vectorsUV[i][j].first.first]][0].size() - 1))];
+					Vector3 textureVector = Vector3((float)textureColor.redComponent / 255, (float)textureColor.greenComponent / 255, (float)textureColor.blueComponent / 255);
+					layers[i][j] = textureVector;
 				}
 				else
 				{
-					res[i][j] = Pixel_triplet(255, 255, 255) * cos;
+					layers[i][j] = Vector3(1, 1, 1);
 				}
+
+				layers[i][j].x = layers[i][j].x * lightVector.x * cos;
+				layers[i][j].y = layers[i][j].y * lightVector.y * cos;
+				layers[i][j].z = layers[i][j].z * lightVector.z * cos;
 			}
 		}
 	}
+
+	for (size_t i = 0; i < vectorsUV.size(); i++)
+	{
+		for (size_t j = 0; j < vectorsUV[0].size(); j++)
+		{
+			res[i][j] = Pixel_triplet(layers[i][j].x * 255, layers[i][j].y * 255, layers[i][j].z * 255);
+		}
+	}
+
+
 	return res;
 }
 
