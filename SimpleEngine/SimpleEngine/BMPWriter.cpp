@@ -38,14 +38,14 @@ std::vector<std::vector<Pixel_triplet>> BMPWriter::readPicture(std::string path)
     return pixels;
 }
 
-void BMPWriter::writePicture(std::vector<std::vector<Pixel_triplet>>photo, std::string path)
+void BMPWriter::writePicture(Pixel_triplet** photo, int pixelH, int pixelW, std::string path)
 {
     std::ofstream fout;
     fout.open(path, std::ios::binary);
 
     BMP_head head;
-    int width = photo[0].size();
-    int height = photo.size();
+    int width = pixelW;
+    int height = pixelH;
     int size = width * height + 54;
     head.id[0] = 'B';
     head.id[1] = 'M';
@@ -85,6 +85,12 @@ void BMPWriter::writePicture(std::vector<std::vector<Pixel_triplet>>photo, std::
     }
 
     fout.close();
+
+    for (size_t i = 0; i < pixelH; i++)
+    {
+        delete[] photo[i];
+    }
+    delete[] photo;
 }
 
 void  BMPWriter::writePicture(std::vector<std::vector<bool>> photo, std::string file_name)

@@ -1,10 +1,11 @@
 #pragma once
 #include "Vector3.h"
 
-struct Box
+class Box
 {
 	Vector3 min;
 	Vector3 max;
+public:
 	Box() {};
 	Box(Vector3 v1, Vector3 v2) 
 	{
@@ -19,5 +20,13 @@ struct Box
 			max = v1;
 		}
 	}
+	Vector3 getMin() 
+	{
+		return min;
+	};
+	Vector3 getMax()
+	{
+		return max;
+	};
 };
 

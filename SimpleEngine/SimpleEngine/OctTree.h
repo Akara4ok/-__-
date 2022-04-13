@@ -10,7 +10,7 @@ class OctTree
 	std::vector<Triangle> triangle;
 public:
 	OctTree() {};
-	OctTree(Box box, std::vector<Triangle> tr);
+	OctTree(Box box, std::vector<Triangle>& tr);
 	void divCube(Node*& root);
 	bool findMinIntersection(Ray r, int& minTriangle, float& minDist, float& u, float& v);
 	void recursivelyFindMinIntersection(Node* root, Ray r, int& minTriangle, float& minDist, float& u, float& v);

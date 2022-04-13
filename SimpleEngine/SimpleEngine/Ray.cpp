@@ -59,12 +59,12 @@ float Ray::boxIntersaction(Box b)
 
 	Vector3 dirfrac(1.0f / dir.x, 1.0f / dir.y, 1.0f / dir.z);
 
-	float t1 = (b.min.x - origin.x) * dirfrac.x;
-	float t2 = (b.max.x - origin.x) * dirfrac.x;
-	float t3 = (b.min.y - origin.y) * dirfrac.y;
-	float t4 = (b.max.y - origin.y) * dirfrac.y;
-	float t5 = (b.min.z - origin.z) * dirfrac.z;
-	float t6 = (b.max.z - origin.z) * dirfrac.z;
+	float t1 = (b.getMin().x - origin.x) * dirfrac.x;
+	float t2 = (b.getMax().x - origin.x) * dirfrac.x;
+	float t3 = (b.getMin().y - origin.y) * dirfrac.y;
+	float t4 = (b.getMax().y - origin.y) * dirfrac.y;
+	float t5 = (b.getMin().z - origin.z) * dirfrac.z;
+	float t6 = (b.getMax().z - origin.z) * dirfrac.z;
 
 	float tmin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 	float tmax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));

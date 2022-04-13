@@ -27,10 +27,10 @@ Vector3 Triangle::getNormal()
 
 bool Triangle::inBox(Box box)
 {
-    Vector3 c = (Vector3(box.min) + Vector3(box.max)) * 0.5;
-    float e0 = (box.max.x - box.min.x) * 0.5;
-    float e1 = (box.max.y - box.min.y) * 0.5;
-    float e2 = (box.max.z - box.min.z) * 0.5;
+    Vector3 c = (Vector3(box.getMin()) + Vector3(box.getMax())) * 0.5;
+    float e0 = (box.getMax().x - box.getMin().x) * 0.5;
+    float e1 = (box.getMax().y - box.getMin().y) * 0.5;
+    float e2 = (box.getMax().z - box.getMin().z) * 0.5;
 
     Vector3 vn0 = Vector3(v0) - c;
     Vector3 vn1 = Vector3(v1) - c;

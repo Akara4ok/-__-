@@ -26,7 +26,7 @@ class Scene
 public:
     Scene(Camera camera, std::vector<LightSource> light);
     void addObj(std::string objPath, std::string file_name);
-    std::vector<std::vector<Pixel_triplet>> getFrame();
-    Vector3 getCenter();
+    Pixel_triplet** getFrame();
+    void setScreen(Ray playerView);
 };
 

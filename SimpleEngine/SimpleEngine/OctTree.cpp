@@ -1,7 +1,7 @@
 #include "OctTree.h"
 #include <numeric>
 
-OctTree::OctTree(Box box, std::vector<Triangle> tr) : triangle(tr)
+OctTree::OctTree(Box box, std::vector<Triangle>& tr) : triangle(tr)
 {
 	std::vector<int> tr1(triangle.size());
 	std::iota(std::begin(tr1), std::end(tr1), 0);
@@ -11,20 +11,20 @@ OctTree::OctTree(Box box, std::vector<Triangle> tr) : triangle(tr)
 
 void OctTree::divCube(Node*& root)
 {
-	Vector3 center((root->box.max.x + root->box.min.x) / 2, (root->box.max.y + root->box.min.y) / 2, (root->box.max.z + root->box.min.z) / 2);
-	Vector3 hx(center.x - root->box.min.x, 0, 0);
-	Vector3 hy(0, center.y - root->box.min.y, 0);
-	Vector3 hz(0, 0, center.z - root->box.min.z);
+	Vector3 center((root->box.getMax().x + root->box.getMin().x) / 2, (root->box.getMax().y + root->box.getMin().y) / 2, (root->box.getMax().z + root->box.getMin().z) / 2);
+	Vector3 hx(center.x - root->box.getMin().x, 0, 0);
+	Vector3 hy(0, center.y - root->box.getMin().y, 0);
+	Vector3 hz(0, 0, center.z - root->box.getMin().z);
 	
 	std::vector<Box> boxes;
-	boxes.push_back(Box(root->box.min, center));
-	boxes.push_back(Box(root->box.min + hz, center + hz));
-	boxes.push_back(Box(root->box.min + hx, center + hx));
-	boxes.push_back(Box(root->box.min + hz + hx, center + hz + hx));
-	boxes.push_back(Box(root->box.min + hy, center + hy));
-	boxes.push_back(Box(root->box.min + hz + hy, center + hz + hy));
-	boxes.push_back(Box(root->box.min + hx + hy, center + hx + hy));
-	boxes.push_back(Box(center, root->box.max));
+	boxes.push_back(Box(root->box.getMin(), center));
+	boxes.push_back(Box(root->box.getMin() + hz, center + hz));
+	boxes.push_back(Box(root->box.getMin() + hx, center + hx));
+	boxes.push_back(Box(root->box.getMin() + hz + hx, center + hz + hx));
+	boxes.push_back(Box(root->box.getMin() + hy, center + hy));
+	boxes.push_back(Box(root->box.getMin() + hz + hy, center + hz + hy));
+	boxes.push_back(Box(root->box.getMin() + hx + hy, center + hx + hy));
+	boxes.push_back(Box(center, root->box.getMax()));
 
 	for (size_t j = 0; j < boxes.size(); j++)
 	{

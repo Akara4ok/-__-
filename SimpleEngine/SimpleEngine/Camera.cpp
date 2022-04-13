@@ -9,9 +9,28 @@ Vector3 Camera::getOrig()
 	return camera;
 }
 
-Camera::Camera(float distToScreen, float realH, float realW, float pixelH, float pixelW) : distToScreen(distToScreen), realH(realH), realW(realW), pixelH(pixelH), pixelW(pixelW)
+Vector3** Camera::getScreenDots()
 {
-	screenDots = std::vector<std::vector<Vector3>>(pixelH, std::vector<Vector3>(pixelW));
+	return screenDots;
+}
+
+int Camera::getPixelH()
+{
+	return pixelH;
+}
+
+int Camera::getPixelW()
+{
+	return pixelW;
+}
+
+Camera::Camera(float distToScreen, float realH, float realW, int pixelH, int pixelW) : distToScreen(distToScreen), realH(realH), realW(realW), pixelH(pixelH), pixelW(pixelW)
+{
+	screenDots = new Vector3* [pixelH];
+	for (int i = 0; i < pixelH; i++)
+	{
+		screenDots[i] = new Vector3[pixelW];
+	}
 }
 
 void Camera::setScreen(Ray playerView) {
@@ -39,10 +58,8 @@ void Camera::setScreen(Ray playerView) {
 	}
 }
 
-std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::draw(OctTree octTree, std::vector<Triangle> triangles)
+void Camera::draw(OctTree octTree, std::vector<Triangle> triangles, int** nTriangle, Vector3** intersectionPoint, Vector3** UVCoord)
 {
-	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> res(pixelH, std::vector < std::pair<std::pair<int, Vector3>, Vector3>>(pixelW, std::make_pair(std::make_pair(-1, Vector3(0, 0, 0)), Vector3(0, 0, 0))));
-
 	for (size_t i = 0; i < pixelH; i++)
 	{
 		for (size_t j = 0; j < pixelW; j++)
@@ -51,9 +68,12 @@ std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::
 			float u, v, dist;
 			dist = 10000;
 			Ray r(camera, (screenDots[i][j] - camera));
-			if(octTree.findMinIntersection(r, k, dist, u, v))
-				res[i][j] = std::make_pair(std::make_pair(k, camera + (screenDots[i][j] - camera).getOrt() * dist), Vector3(1 - u - v, u, v));
+			if (octTree.findMinIntersection(r, k, dist, u, v))
+			{
+				nTriangle[i][j] = k;
+				intersectionPoint[i][j] = camera + (screenDots[i][j] - camera).getOrt() * dist;
+				UVCoord[i][j] = Vector3(1 - u - v, u, v);
+			}
 		}
 	}
-	return res;
 }
