@@ -1,4 +1,5 @@
 #include "Ray.h"
+#include <algorithm>
 
 Ray::Ray()
 {
@@ -18,7 +19,7 @@ Vector3 Ray::getDir()
 	return dir;
 }
 
-float Ray::triangleIntersaction(Triangle tr, float& u, float& v)
+float Ray::triangleIntersection(Triangle tr, float& u, float& v)
 {
 	Vector3 v0 = tr.getVertex(0);
 	Vector3 v1 = tr.getVertex(1);
@@ -51,4 +52,32 @@ float Ray::triangleIntersaction(Triangle tr, float& u, float& v)
 	if (t < 0)
 		return 0;
 	return (dir * t).absValue();
+}
+
+float Ray::boxIntersaction(Box b)
+{
+
+	Vector3 dirfrac(1.0f / dir.x, 1.0f / dir.y, 1.0f / dir.z);
+
+	float t1 = (b.min.x - origin.x) * dirfrac.x;
+	float t2 = (b.max.x - origin.x) * dirfrac.x;
+	float t3 = (b.min.y - origin.y) * dirfrac.y;
+	float t4 = (b.max.y - origin.y) * dirfrac.y;
+	float t5 = (b.min.z - origin.z) * dirfrac.z;
+	float t6 = (b.max.z - origin.z) * dirfrac.z;
+
+	float tmin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
+	float tmax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
+
+	if (tmax < 0)
+	{
+		return false;
+	}
+
+	if (tmin > tmax)
+	{
+		return false;
+	}
+
+	return true;
 }

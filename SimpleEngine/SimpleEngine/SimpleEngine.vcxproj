@@ -143,6 +143,7 @@
     <ClCompile Include="BMPWriter.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="objParser.cpp" />
+    <ClCompile Include="OctTree.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SimpleEngine.cpp" />
@@ -153,10 +154,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BMPWriter.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="BMPStruct.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="objParser.h" />
+    <ClInclude Include="OctTree.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Triangle.h" />

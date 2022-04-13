@@ -18,11 +18,14 @@ void Scene::addObj(std::string objPath, std::string file_name)
 	{
 		std::cout << e.what();
 	}
+
+	octTree = OctTree(boundingBox, triangles);
+	int k;
 }
 
 std::vector<std::vector<Pixel_triplet>> Scene::getFrame()
 {
-	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> vectorsUV = camera.draw(triangles);
+	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> vectorsUV = camera.draw(octTree, triangles);
 	std::vector<std::vector<std::vector<Vector3>>> layers(lightSources.size(), std::vector<std::vector<Vector3>> (vectorsUV.size(), std::vector<Vector3>(vectorsUV[0].size(), Vector3(0, 0, 0))));
 	std::vector<std::vector<Pixel_triplet>> res(vectorsUV.size(), std::vector<Pixel_triplet>(vectorsUV[0].size(), Pixel_triplet(0, 0, 0)));
 

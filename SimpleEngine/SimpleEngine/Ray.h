@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Triangle.h"
+#include "Box.h"
 
 class Ray
 {
@@ -11,6 +12,7 @@ public:
 	Ray(Vector3 origin, Vector3 dir);
 	Vector3 getOrigin();
 	Vector3 getDir();
-	float triangleIntersaction(Triangle tr, float& u, float& v);
+	float triangleIntersection(Triangle tr, float& u, float& v);
+	float boxIntersaction(Box b);
 };
 

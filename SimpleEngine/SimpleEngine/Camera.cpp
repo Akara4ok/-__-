@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Vector2.h"
 #include <utility>
+#include <iostream>
 
 Vector3 Camera::getOrig()
 {
@@ -16,22 +17,13 @@ Camera::Camera(float distToScreen, float realH, float realW, float pixelH, float
 void Camera::setScreen(Ray playerView) {
 	dir = playerView.getDir();
 	camera = playerView.getOrigin();
-
-	float a, b, c, d; //plane equation for screen
 	Vector3 n = dir.getOrt();
-	a = n.x;
-	b = n.y;
-	c = n.z;
-	float s = Vector3::dot(-camera, dir) > 0 ? 1 : -1;
-	float l = Vector3::dot(camera, dir) / dir.absValue();
-	d = -(distToScreen - (Vector3::dot(-camera, dir) > 0 ? 1 : -1) * abs(Vector3::dot(camera, dir) / dir.absValue()));
-
-
-	float t; //center of the screen
-	t = -(a * camera.x + b * camera.y + c * camera.z + d) / (a * dir.x + b * dir.y + c * dir.z);
-	Vector3 center(camera.x + dir.x * t, camera.y + dir.y * t, camera.z + dir.z * t);
-
-	Vector3 right = (Vector3::cross(dir, Vector3(0, 1, 0))).getOrt(); //two ortogonal vector for screen
+	Vector3 distVector = n * distToScreen;
+	Vector3 center(camera.x + distVector.x, camera.y + distVector.y, camera.z + distVector.z);
+	Vector3 notNormalizedRight = Vector3::cross(dir, Vector3(0, 1, 0));
+	if (std::abs(notNormalizedRight.x) < 0.0001 && std::abs(notNormalizedRight.y) < 0.0001 && std::abs(notNormalizedRight.z) < 0.0001)
+		notNormalizedRight = Vector3(-1, 0, 0);
+	Vector3 right = (notNormalizedRight).getOrt(); //two ortogonal vector for screen
 	Vector3 up = (Vector3::cross(right, dir)).getOrt();
 
 	Vector3 corner = right * (-realW / 2) + center; //find left-down corner
@@ -47,7 +39,7 @@ void Camera::setScreen(Ray playerView) {
 	}
 }
 
-std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::draw(std::vector<Triangle> triangles)
+std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::draw(OctTree octTree, std::vector<Triangle> triangles)
 {
 	std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> res(pixelH, std::vector < std::pair<std::pair<int, Vector3>, Vector3>>(pixelW, std::make_pair(std::make_pair(-1, Vector3(0, 0, 0)), Vector3(0, 0, 0))));
 
@@ -55,17 +47,12 @@ std::vector < std::vector<std::pair<std::pair<int, Vector3>, Vector3>>> Camera::
 	{
 		for (size_t j = 0; j < pixelW; j++)
 		{
-			float min = 100000;
-			for (size_t k = 0; k < triangles.size(); k++)
-			{
-				float u, v;
-				float dist = Ray(camera, (screenDots[i][j] - camera)).triangleIntersaction(triangles[k], u, v);
-				if (dist && min > dist)
-				{
-					res[i][j] = std::make_pair(std::make_pair(k, camera + (screenDots[i][j] - camera).getOrt() * dist), Vector3(1 - u - v, u, v));
-					min = dist;
-				}
-			}
+			int k;
+			float u, v, dist;
+			dist = 10000;
+			Ray r(camera, (screenDots[i][j] - camera));
+			if(octTree.findMinIntersection(r, k, dist, u, v))
+				res[i][j] = std::make_pair(std::make_pair(k, camera + (screenDots[i][j] - camera).getOrt() * dist), Vector3(1 - u - v, u, v));
 		}
 	}
 	return res;

@@ -34,6 +34,12 @@
     <Filter Include="Header Files\Primitives">
       <UniqueIdentifier>{6e02dcd0-996c-4c69-acf4-4d5bce851010}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tree">
+      <UniqueIdentifier>{1acc4e5e-39cc-4c12-8f8c-d6aa4a78c2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tree">
+      <UniqueIdentifier>{51bdea28-dd23-4f25-91c5-4929786ea3f7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Primitives">
       <UniqueIdentifier>{4ed4629c-48ec-4ea3-a6d0-c615c0b26b16}</UniqueIdentifier>
     </Filter>
@@ -72,6 +78,9 @@
     <ClCompile Include="BMPStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OctTree.cpp">
+      <Filter>Source Files\Tree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -106,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="LightSource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="OctTree.h">
+      <Filter>Header Files\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Tree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
